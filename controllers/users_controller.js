@@ -2,7 +2,11 @@ const db=require('../config/mongoose');
 const User=require('../models/user');
 
 module.exports.profile=function(request,response){
-    return response.end('<h1>User Profile</h1>');
+    //return response.end('<h1>User Profile</h1>');
+    return response.render('user_profile',{
+        title:"Codeial| Profile Page",
+        
+    });
 }//now this controller is ready to be accessed by the router
 
 module.exports.posts=function(request,response){
@@ -52,6 +56,7 @@ module.exports.create=function(request,response){
 }
 //sign in and create a session for the user
 module.exports.createSession=function(request,response){
-    //Todo later
+    
+    return response.redirect('/');
     
 }

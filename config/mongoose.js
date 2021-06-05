@@ -1,3 +1,4 @@
+//setting up mongodb database using mongoose
 const mongoose=require('mongoose');//require the library odm 
 mongoose.connect('mongodb://localhost/codeial_db');//connect to database (with name contacts_list_db)
 //acquire the connection (to check if it is successful)
