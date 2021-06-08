@@ -1,0 +1,29 @@
+#layout-footer{
+
+    footer{
+        display: flex;
+        background-color: grey;
+        
+        h3{
+            color: white;
+            display: inline-block;
+        }
+
+        div{
+            
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            a{
+                font-size: large;
+                text-decoration: none;
+                color: white;
+            }
+
+        }
+
+    }
+    
+
+}

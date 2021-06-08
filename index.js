@@ -10,8 +10,18 @@ const db = require('./config/mongoose');
 const session = require('express-session');//ctrl+space for autocomplete options
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
-const { MongoDBStore } = require('connect-mongodb-session');
+//const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
+//const { MongoDBStore } = require('connect-mongodb-session');
+const sassMiddleware= require('node-sass-middleware');
+
+app.use(sassMiddleware({
+    src: './assets/scss',  //from where do i pick up scss files to convert into css
+    dest: './assets/css',       //where do i need to put the css files
+    debug:  'true',                    //debug mode is whatever info you see in the terminal while server is running //true cos we want to see if any error occurs to be displayed in terminal //false when we run it in production mode
+    outputStyle: 'extended',                      // do i want everything in single line(compressed) or in multiple lines(extended)
+    prefix: '/css'                            //where should my server look out for css files //just the prefix of css files in href /css/layout.css 
+}));
+
 
 app.use(express.urlencoded());
 
