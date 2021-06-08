@@ -4,7 +4,7 @@ const User=require('../models/user');
 module.exports.profile=function(request,response){
     //return response.end('<h1>User Profile</h1>');
     return response.render('user_profile',{
-        title:"Codeial| Profile Page",
+        title:"User Profile"
         
     });
 }//now this controller is ready to be accessed by the router
@@ -14,12 +14,19 @@ module.exports.posts=function(request,response){
 }
 //const userSingUp=require('../views/user_sign_up');
 module.exports.signUp=function(request,response){
+
+    if (request.isAuthenticated()){
+        return response.redirect('/users/profile');//will load profile page when user is signed in and he is trying to go to sign-up page
+    }
     return response.render('user_sign_up',{
         title:"Codeial | Sign Up"
     });
 }
 
 module.exports.signIn=function(request,response){
+    if (request.isAuthenticated()){
+        return response.redirect('/users/profile');//will load profile page when user is signed in and he is trying to go to sign-in page
+    }
     return response.render('user_sign_in',{
         title:"Codeial | Sign In"
     });
@@ -59,4 +66,9 @@ module.exports.createSession=function(request,response){
     
     return response.redirect('/');
     
+}
+
+module.exports.destroySession=function(request,response){
+    request.logout();
+    return response.redirect('/');
 }

@@ -5,7 +5,7 @@ const passport=require('passport');
 const usersController=require('../controllers/users_controller');
 //console.log("router loaded");
 
-router.get('/profile',usersController.profile);
+router.get('/profile',passport.checkAuthentication,usersController.profile);
 
 router.get('/posts',usersController.posts);
 
@@ -19,4 +19,6 @@ router.post('/create-session',passport.authenticate(  //when user signs in first
     'local',
     {failureRedirect: '/users/sign-in'},
 ) ,usersController.createSession);
+
+router.get('/sign-out',usersController.destroySession);
 module.exports=router;
