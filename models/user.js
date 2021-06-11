@@ -19,5 +19,5 @@ const userSchema= new mongoose.Schema({
     timestamps: true    //mongoose maintains created at ,updated at timestaps by applying this property
 });
 
-const User=mongoose.model('User',userSchema);//telling mongoose that this is a model
+const User=mongoose.model('User',userSchema);//telling mongoose that this->'User' is a model in the database
 module.exports=User;//now exporting this User schema

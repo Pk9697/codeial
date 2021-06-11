@@ -1,6 +1,6 @@
 const db=require('../config/mongoose');
 const User=require('../models/user');
-
+const Post=require('../models/post');
 module.exports.profile=function(request,response){
     //return response.end('<h1>User Profile</h1>');
     return response.render('user_profile',{
@@ -11,6 +11,7 @@ module.exports.profile=function(request,response){
 
 module.exports.posts=function(request,response){
     return response.end('<h1>User Posts</h1>');
+    //console.log(request.body);
 }
 //const userSingUp=require('../views/user_sign_up');
 module.exports.signUp=function(request,response){
