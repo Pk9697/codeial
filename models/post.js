@@ -7,7 +7,16 @@ const postSchema= new mongoose.Schema({
     user: { //to link postSchema with userSchema
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User' //refernce from User Schema
-    }
+    },
+    //include the array of ids of all comments in this post schema itself
+    //cos in a post we would be needing to show all comments here itself
+    //which would make comments load here faster than looking for comments in commentsSchema
+    comments:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'Comment'
+        }
+    ]
 },{
     timestamps:true
 });
