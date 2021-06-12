@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express=require('express');//fetch the existing express instance, does not get created again and again,here main index.js express instance is used
 
 const router=express.Router();//we are doing this to separate our routes into another folder or files
@@ -9,4 +10,5 @@ const homeController=require('../controllers/home_controller');
 router.get('/',homeController.home);
 
 router.use('/users',require('./users'));//will use users.js when request comes for users
+router.use('/posts',require('./posts'));
 module.exports=router;
