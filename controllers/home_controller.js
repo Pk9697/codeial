@@ -12,7 +12,15 @@ module.exports.home=function(request,response){//now we need to access this fxn 
          });
     });*/
     //Populate the user of each post(whole user object is populated for that userid)
-    Post.find({}).populate('user').exec(function(err,posts){
+    Post.find({})
+    .populate('user')//from postSchema
+    .populate({
+        path: 'comments',
+        populate:{
+            path: 'user'//users who commented
+        }
+    })
+    .exec(function(err,posts){
         return response.render('home',{
             title:"Home",
             posts:posts //passing every posts from db to home.ejs
