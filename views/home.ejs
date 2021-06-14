@@ -3,45 +3,47 @@
         <title>
         <%= title %>
         </title>
+        <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
-        <h1>Codeial html page rendered / <%= title %></h1>
+        <div id="home-container">
+        <!--<h1>Codeial html page rendered / <%= title %></h1>-->
 
-        <section id="feed-posts">
-
-            <h4>Posts</h4>
-            <!--1st level of check to display form only when user is signed in-->
-            <% if (locals.user){ %>
-            <form action="/posts/create" id="new-post-form" method="POST">
-                <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea> 
-                <input type="submit" value="Post">
-            </form>
-
-            <% } %>
-
-            <div id="posts-div-container">
-                <ul>
-                    <% for(post of posts) { %>
-
-                        <%- include('_post') -%>      <!--Making our codebase smaller using partials we include _post.ejs where rest of post code is situated-->
-                        
-                    <% } %>
-                </ul>
-
-            </div>
-            
-
-
-        </section>
-
-        <section id="user-friends">
-            <h4>Friends</h4>
-            <% for(u of all_users) { %>
+            <section id="feed-posts">
+    
+                <h4>Posts</h4>
+                <!--1st level of check to display form only when user is signed in-->
+                <% if (locals.user){ %>
+                <form action="/posts/create" id="new-post-form" method="POST">
+                    <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea> 
+                    <input type="submit" value="Post">
+                </form>
+    
+                <% } %>
+    
+                <div id="posts-div-container">
+                    <ul>
+                        <% for(post of posts) { %>
+    
+                            <%- include('_post') -%>      <!--Making our codebase smaller using partials we include _post.ejs where rest of post code is situated-->
+                            
+                        <% } %>
+                    </ul>
+    
+                </div>
                 
-                <p>
-                    <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-                </p>
-            <% } %>
-        </section>
+            </section>
+    
+            <section id="user-friends">
+                <h4>Friends</h4>
+                <% for(u of all_users) { %>
+                    
+                    <p>
+                        <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                    </p>
+                <% } %>
+            </section>
+        </div>
+        
     </body>
 </html>
