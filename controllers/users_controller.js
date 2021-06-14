@@ -15,6 +15,18 @@ module.exports.profile=function(request,response){
     });*/
 }//now this controller is ready to be accessed by the router
 
+module.exports.update=function(request,response){
+    if(request.user.id == request.params.id){ //only update by the logged in user 
+        User.findByIdAndUpdate(request.params.id, request.body,function(err, user){//update that user with request.body which is coming from form 
+            return response.redirect('back');
+        });
+    }else{
+        //if someone is trying to fiddle 
+        return response.status(401).send('Unauthorized');
+    }
+}
+
+
 module.exports.posts=function(request,response){
     return response.end('<h1>User Posts</h1>');
     //console.log(request.body);
