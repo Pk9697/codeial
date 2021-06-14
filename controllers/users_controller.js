@@ -3,10 +3,16 @@ const User=require('../models/user');
 const Post=require('../models/post');
 module.exports.profile=function(request,response){
     //return response.end('<h1>User Profile</h1>');
-    return response.render('user_profile',{
+    User.findById(request.params.id,function(err,user){
+        return response.render('user_profile',{
+            title:"User Profile",
+            profile_user: user
+        });
+    });
+    /*return response.render('user_profile',{
         title:"User Profile"
         
-    });
+    });*/
 }//now this controller is ready to be accessed by the router
 
 module.exports.posts=function(request,response){
