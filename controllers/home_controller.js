@@ -2,42 +2,32 @@
 //a group of actions is called a controller
 const Post=require('../models/post');
 const User=require('../models/user');
-module.exports.home=function(request,response){//now we need to access this fxn in routes
-    //return response.end('<h1>Express is up for Codeial</h1>')
-    //console.log(request.cookies);//cookies set up in browser so coming as a request
-    //response.cookie('user_id',25);//changing cookies from server side using response
-    /*Post.find({},function(err,posts){// finds all the created post in db
-        return response.render('home',{
-            title:"Home",
-            posts:posts //passing every posts from db to home.ejs
-         });
-    });*/
+module.exports.home= async function(request,response){
+    
     //Populate the user of each post(whole user object is populated for that userid)
-    Post.find({})
-    .populate('user')//from postSchema
-    .populate({
-        path: 'comments',
-        populate:{
-            path: 'user'//users who commented
-        }
-    })
-    .exec(function(err,posts){
 
-        User.find({},function(err,users){
-            return response.render('home',{
-                title:"Home",
-                posts:posts, //passing every posts from db to home.ejs
-                all_users:users //sending all the users from user db
-            });
+    //writing cleaner code using async await
+    try{
+        let posts=await Post.find({})//1st this completes
+        .populate('user')//from postSchema
+        .populate({
+            path: 'comments',
+            populate:{
+                path: 'user'//users who commented
+            }
         });
-        /*return response.render('home',{
-            title:"Home",
-            posts:posts //passing every posts from db to home.ejs
-         });*/
-    });
+    
+        let users=await User.find({});//2nd this
 
-    /*return response.render('home',{
-       title:"Home" 
-    });*/
+        return response.render('home',{//then at last this
+            title:"Home",
+            posts:posts, //passing every posts from db to home.ejs
+            all_users:users //sending all the users from user db
+        });
+    }catch(err){
+        console.log('Error',err);
+        return;
+    }
+    
 }
 
