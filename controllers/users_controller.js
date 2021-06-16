@@ -1,6 +1,7 @@
 const db=require('../config/mongoose');
 const User=require('../models/user');
 const Post=require('../models/post');
+//no change keep it same as before cos there is no nesting here only callback fxns
 module.exports.profile=function(request,response){
     //return response.end('<h1>User Profile</h1>');
     User.findById(request.params.id,function(err,user){
