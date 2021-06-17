@@ -14,12 +14,14 @@ module.exports.create=async function(request,response){
         //adding comments in the comments array to the Post schema
         post.comments.push(comment);//updating post schema
         post.save();//then saving
-
-        response.redirect('/');
+        request.flash('success','Comment published!');
+        //response.redirect('/');
+        return response.redirect('back'); 
     }
     }catch(err){
-        console.log('Error',err);
-        return;
+        //console.log('Error',err);
+        request.flash('error',err);
+        return response.redirect('back'); 
     }    
     
 }
@@ -37,13 +39,16 @@ module.exports.destroy=async function(request,response){
         comment.remove();
         //$pull is the mongodb syntax to remove from db
         let post=await Post.findByIdAndUpdate(postId, {$pull: {comments: request.params.id}});
+        request.flash('success','Comments deleted from comments as well as posts.comments array!');
         return response.redirect('back');
         
         }else{
+        request.flash('error','You cannot delete this comment');
         return response.redirect('back');
         }
     }catch(err){
-        console.log('Error',err);
+        //console.log('Error',err);
+        request.flash('error',err);
         return;
     }
     

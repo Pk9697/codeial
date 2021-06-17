@@ -6,10 +6,12 @@ module.exports.create=async function(request,response){
             content: request.body.content,
             user: request.user._id //from locals.user in passport-local will save the current logged in user who is posting
         });
+        request.flash('success','Post published!');
         return response.redirect('back');
     }catch(err){
-        console.log('Error',err);
-        return; 
+        //console.log('Error',err);
+        request.flash('error',err);
+        return response.redirect('back'); 
     }
     
 }
@@ -25,14 +27,17 @@ module.exports.destroy=async function(request,response){
         //deleteMany is the fxn which deleted all the comments based on some query past
             await Comment.deleteMany({post: request.params.id});//delete comments with post having that post id
             
+            request.flash('success','Post and associated comments deleted!');
             return response.redirect('back');
 
         }else{
+            request.flash('error','You cannot delete this post');
             return response.redirect('back');
         }
     }catch(err){
-        console.log('Error',err);
-        return; 
+        //console.log('Error',err);
+        request.flash('error',err);
+        return response.redirect('back'); 
     }
     
 }

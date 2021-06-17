@@ -5,18 +5,21 @@ const LocalStrategy=require('passport-local').Strategy;
 const User=require('../models/user');
 //authentication using passport
 passport.use(new LocalStrategy({
-    usernameField: 'email'  //which we are going to make unique in userschema
+    usernameField: 'email',  //which we are going to make unique in userschema
+    passReqToCallback: true
+
     },
-    function(email,password,done){//done is the callback fxn which is reporting back to passport.js
+    function(request,email,password,done){//done is the callback fxn which is reporting back to passport.js
         //find a user and establish the identity
         User.findOne({email:email},function(err,user){
             if(err){
-                console.log("Error in finding user --> Passport");
+                request.flash('error', err);
                 return done(err);
             }
 
             if(!user || user.password != password){
-                console.log("Invalid UserName/Password");
+                //console.log("Invalid UserName/Password");
+                request.flash('error', 'Invalid Username/Password');
                 return done(null,false);//passed error as null authentication as false
             }
 
