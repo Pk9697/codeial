@@ -19,10 +19,12 @@ module.exports.profile=function(request,response){
 module.exports.update=function(request,response){
     if(request.user.id == request.params.id){ //only update by the logged in user 
         User.findByIdAndUpdate(request.params.id, request.body,function(err, user){//update that user with request.body which is coming from form 
+            request.flash('success','Profile Updated!');
             return response.redirect('back');
         });
     }else{
         //if someone is trying to fiddle 
+        request.flash('error','You cannot update someone else profile');
         return response.status(401).send('Unauthorized');
     }
 }
