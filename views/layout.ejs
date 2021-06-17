@@ -16,6 +16,15 @@
         <header id="layout-header">
             <%- include('_header'); %>
         </header>
+        <!--access flash here where flash.success should exist with length > 0 which means should not be empty-->
+        <% if(flash.success && flash.success.length>0) { %>
+            <h5>
+                <%= flash.success %>
+            </h5>
+        
+            
+
+        <% } %>
         
 
         <main id="layout-main">

@@ -13,6 +13,8 @@ const passportLocal=require('./config/passport-local-strategy');
 //const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
 //const { MongoDBStore } = require('connect-mongodb-session');
 const sassMiddleware= require('node-sass-middleware');
+const flash=require('connect-flash');
+const customMware=require('./config/middleware');//used to send request.flash in the response.redirect method in users controller
 
 app.use(sassMiddleware({
     src: './assets/scss',  //from where do i pick up scss files to convert into css
@@ -81,7 +83,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);//extremely important  go to passport-local-strategy to view more details
+
+app.use(flash());//uses session cookies
+app.use(customMware.setFlash);
 app.use('/',require('./routes'));//order matters so routes should be after passport.session
+
 
 app.listen(port,function(err){
     if(err){

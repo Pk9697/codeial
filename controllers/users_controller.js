@@ -83,12 +83,13 @@ module.exports.create=function(request,response){
 }
 //sign in and create a session for the user
 module.exports.createSession=function(request,response){
-    
+    request.flash('success', 'Logged in Successfully');
     return response.redirect('/');
     
 }
 
 module.exports.destroySession=function(request,response){
     request.logout();
+    request.flash('success', 'You have logged out'); //to pass on these messages to ejs template we created middleware which fetches everything from the request flash and puts it into locals.flash and finally we used it just below flash() middleware in index.js
     return response.redirect('/');
 }
