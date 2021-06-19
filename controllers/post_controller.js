@@ -2,10 +2,19 @@ const Post=require('../models/post');
 const Comment=require('../models/comment')
 module.exports.create=async function(request,response){
     try{
-        await Post.create({
+        let post=await Post.create({
             content: request.body.content,
             user: request.user._id //from locals.user in passport-local will save the current logged in user who is posting
         });
+
+        if(request.xhr){//xhr request is coming from ajax request
+            return response.status(200).json({
+                data:{
+                    post:post //sending the post which was created back to ajax
+                },
+                message: "Post created!"
+            });
+        }
         request.flash('success','Post published!');
         return response.redirect('back');
     }catch(err){
