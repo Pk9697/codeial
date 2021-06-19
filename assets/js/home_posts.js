@@ -9,12 +9,50 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),// converts from data into json in key value pair
                 success: function(data){
-                    console.log(data);
+                    //console.log(data);
+                    let newPost=newPostDom(data.data.post);
+                    $('#posts-div-container>ul').prepend(newPost);
                 },error: function(error){
                     console.log(error.responseText);
                 }
             });
         });
+    }
+    //method to create a post in dom
+
+    let newPostDom=function(post){
+        return $(`<li id="post-${post._id}">
+                    <p>
+                        
+                        <small>
+                            <a class="delete-post-button" href="/posts/destroy/${post._id}">X</a>
+                        </small>
+                        
+                        ${post.content} 
+                        <br>
+                        <small><!--Showing the author-->
+                            ${ post.user.name }
+                        </small>
+                    </p>
+    
+                    <div class="post-comments">
+                    
+                            <form action="/comments/create" method="POST">
+                                <input type="text" name="content" placeholder="Type here to add comment..." required>
+                                <input type="hidden" name="post" value="${ post._id }"> <!--postid will be sent with form data which will be processed in comments-controller-->
+                                <input type="submit" value="Add Comment">
+                            </form>
+                   
+    
+                        <div class="post-comments-list">
+                            <ul id="post-comments-${ post._id }">
+                                
+                            </ul>
+                        </div>
+                    </div>
+        
+                  </li>
+                `);
     }
 
     createPost();
