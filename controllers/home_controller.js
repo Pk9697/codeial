@@ -9,6 +9,7 @@ module.exports.home= async function(request,response){
     //writing cleaner code using async await
     try{
         let posts=await Post.find({})//1st this completes
+        .sort('-createdAt')//to display posts which are created recent at first
         .populate('user')//from postSchema
         .populate({
             path: 'comments',

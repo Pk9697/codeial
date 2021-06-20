@@ -36,6 +36,14 @@ module.exports.destroy=async function(request,response){
         //deleteMany is the fxn which deleted all the comments based on some query past
             await Comment.deleteMany({post: request.params.id});//delete comments with post having that post id
             
+            if(request.xhr){
+                return response.status(200).json({
+                    data: {
+                        post_id : request.params.id
+                    },
+                    message: "Post deleted!"
+                });
+            }
             request.flash('success','Post and associated comments deleted!');
             return response.redirect('back');
 
