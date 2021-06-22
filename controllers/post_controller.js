@@ -8,6 +8,11 @@ module.exports.create=async function(request,response){
         });
 
         if(request.xhr){//xhr request is coming from ajax request
+            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+            // also this will print user name which was displaying undefined earlier 
+            post = await post.populate('user', 'name').execPopulate();
+
+
             return response.status(200).json({
                 data:{
                     post:post //sending the post which was created back to ajax

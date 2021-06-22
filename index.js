@@ -19,7 +19,7 @@ const customMware=require('./config/middleware');//used to send request.flash in
 app.use(sassMiddleware({
     src: './assets/scss',  //from where do i pick up scss files to convert into css
     dest: './assets/css',       //where do i need to put the css files
-    debug:  'true',                    //debug mode is whatever info you see in the terminal while server is running //true cos we want to see if any error occurs to be displayed in terminal //false when we run it in production mode
+    debug:  true,                    //debug mode is whatever info you see in the terminal while server is running //true cos we want to see if any error occurs to be displayed in terminal //false when we run it in production mode
     outputStyle: 'extended',                      // do i want everything in single line(compressed) or in multiple lines(extended)
     prefix: '/css'                            //where should my server look out for css files //just the prefix of css files in href /css/layout.css 
 }));

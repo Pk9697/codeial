@@ -14,6 +14,14 @@ module.exports.create=async function(request,response){
         //adding comments in the comments array to the Post schema
         post.comments.push(comment);//updating post schema
         post.save();//then saving
+        if(request.xhr){
+            return response.status(200).json({
+                data:{
+                    comment:comment
+                },
+                message:"Comment created!"
+            });
+        }
         request.flash('success','Comment published!');
         //response.redirect('/');
         return response.redirect('back'); 
