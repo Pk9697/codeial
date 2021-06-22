@@ -9,10 +9,14 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),// converts from data into json in key value pair
                 success: function(data){
-                    console.log(data);
+                    //console.log(data);
                     let newPost=newPostDom(data.data.post);
                     $('#posts-div-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));//fetching deletelink inside newPost with class delete-button
+                
+                    // call the create comment class
+                    new PostComments(data.data.post._id);
+
                 },error: function(error){
                     console.log(error.responseText);
                 }
@@ -38,7 +42,7 @@
     
                     <div class="post-comments">
                     
-                            <form action="/comments/create" method="POST">
+                            <form id="post-${ post._id }-comments-form" action="/comments/create" method="POST">
                                 <input type="text" name="content" placeholder="Type here to add comment..." required>
                                 <input type="hidden" name="post" value="${ post._id }"> <!--postid will be sent with form data which will be processed in comments-controller-->
                                 <input type="submit" value="Add Comment">
@@ -71,6 +75,22 @@
             });
         });
     }
+    var postId;
+
+     // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
+    let convertPostsToAjax = function(){
+        $('#posts-div-container>ul>li').each(function(){
+            let self = $(this);
+            //let deleteButton = $(' .delete-post-button', self);
+            //deletePost(deleteButton);
+
+            // get the post's id by splitting the id attribute
+            postId = self.prop('id').split("-")[1];
+            new PostComments(postId);
+        });
+    }
 
     createPost();
+    convertPostsToAjax();
+    //PostComments(postId);
 }

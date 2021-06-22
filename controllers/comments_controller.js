@@ -15,6 +15,8 @@ module.exports.create=async function(request,response){
         post.comments.push(comment);//updating post schema
         post.save();//then saving
         if(request.xhr){
+            // Similar for comments to fetch the user's id!
+            comment = await comment.populate('user', 'name').execPopulate();
             return response.status(200).json({
                 data:{
                     comment:comment
@@ -47,6 +49,11 @@ module.exports.destroy=async function(request,response){
         comment.remove();
         //$pull is the mongodb syntax to remove from db
         let post=await Post.findByIdAndUpdate(postId, {$pull: {comments: request.params.id}});
+        
+        
+        
+        
+        
         request.flash('success','Comments deleted from comments as well as posts.comments array!');
         return response.redirect('back');
         
