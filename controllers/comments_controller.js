@@ -50,7 +50,15 @@ module.exports.destroy=async function(request,response){
         //$pull is the mongodb syntax to remove from db
         let post=await Post.findByIdAndUpdate(postId, {$pull: {comments: request.params.id}});
         
-        
+         // send the comment id which was deleted back to the views
+         if (request.xhr){
+            return response.status(200).json({
+                data: {
+                    comment_id: request.params.id
+                },
+                message: "Post deleted"
+            });
+        }
         
         
         
