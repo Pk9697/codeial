@@ -17,6 +17,15 @@
                     // call the create comment class
                     new PostComments(data.data.post._id);
 
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post published!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                        
+                    }).show();
+
                 },error: function(error){
                     console.log(error.responseText);
                 }
@@ -69,6 +78,15 @@
                 url: $(deleteLink).prop('href'),//.prop gets the value of href from delete a tag
                 success:function(data){
                     $(`#post-${data.data.post_id}`).remove();
+
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post Deleted",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                        
+                    }).show();
                 },error:function(error){
                     console.log(error.responseText);
                 }
