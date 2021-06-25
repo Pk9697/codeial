@@ -1,6 +1,8 @@
 const db=require('../config/mongoose');
 const User=require('../models/user');
 const Post=require('../models/post');
+const fs=require('fs');
+const path=require('path');
 //no change keep it same as before cos there is no nesting here only callback fxns
 module.exports.profile=function(request,response){
     //return response.end('<h1>User Profile</h1>');
@@ -39,9 +41,48 @@ module.exports.update=async function(request,response){
                 user.email=request.body.email;
 
                 if(request.file){
+                    
+                    if(user.avatar){
+                        //if avatar already exists for that user and he is trying to update his pic then we delete previous image
+                        /*const pathFile = path.join(__dirname,'..',user.avatar);
+
+                        fs.access(pathFile, fs.F_OK, (err) => {
+                            if (err) {
+                                console.error(err);
+                                return;
+                            };
+                            console.log("path exists",pathFile);
+                            //file exists
+                            fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                        });
+
+                        const folderName=path.join(__dirname,'..',User.avatarPath);
+                        console.log(folderName);
+                        fs.readdir(folderName, function(err, files) {
+                            if (err) {
+                               // some sort of error
+                               console.log(err);
+                            } else {
+                                console.log(files.length);
+                               if (files.length==0) {
+                                   // directory appears to be empty 
+                                   console.log("empty");
+                               } else {
+                                  // directory appears to not be empty so send email for not empty
+                                  console.log("present");
+                                  fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                                }
+                            }
+                        });*/
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                        
+                    }
+                    
                     //if user uploads a file then store in user schema for user.avatar= 
                     //saving the path of the uploaded file into the avatar field in the user
                     user.avatar=User.avatarPath+'/'+request.file.filename;//user.avatar='uploads/users/avatar/avatar-1624623866554'
+
+                    
                 }
                 user.save();
                 return response.redirect('back');
@@ -59,10 +100,10 @@ module.exports.update=async function(request,response){
 }
 
 
-module.exports.posts=function(request,response){
+/*module.exports.posts=function(request,response){
     return response.end('<h1>User Posts</h1>');
     //console.log(request.body);
-}
+}*/
 //const userSingUp=require('../views/user_sign_up');
 module.exports.signUp=function(request,response){
 
