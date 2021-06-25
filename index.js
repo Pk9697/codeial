@@ -32,6 +32,8 @@ app.use(cookieParser());
 //app.use('/',require('./routes'));//middleware is used to load routes from path ./routes folder
 //by default fetches index.js so no need to give path ./routes/index
 app.use(express.static('./assets'));
+//make the uploads path availaible to the browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout

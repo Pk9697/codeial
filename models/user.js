@@ -35,8 +35,8 @@ let storage=multer.diskStorage({
     }
 });
 
-//static fxns or methods
-userSchema.statics.uploadedAvatar=multer({storage: storage}).single('avatar');//.single ensures only 1 file will be uploaded for the fieldname avatar
+//static fxns or methods which will be accessed in usersController update fxn
+userSchema.statics.uploadedAvatar=multer({storage: storage}).single('avatar');//.single ensures only 1 file will be uploaded with the fieldname avatar
 userSchema.statics.avatarPath=AVATAR_PATH;//to access AVATAR_PATH publically
 
 
