@@ -16,8 +16,8 @@ module.exports.profile=function(request,response){
     });*/
 }//now this controller is ready to be accessed by the router
 
-module.exports.update=function(request,response){
-    if(request.user.id == request.params.id){ //only update by the logged in user 
+module.exports.update=async function(request,response){
+    /*if(request.user.id == request.params.id){ //only update by the logged in user 
         User.findByIdAndUpdate(request.params.id, request.body,function(err, user){//update that user with request.body which is coming from form 
             request.flash('success','Profile Updated!');
             return response.redirect('back');
@@ -26,7 +26,36 @@ module.exports.update=function(request,response){
         //if someone is trying to fiddle 
         request.flash('error','You cannot update someone else profile');
         return response.status(401).send('Unauthorized');
-    }
+    }*/
+    if(request.user.id == request.params.id){ 
+        try{
+            let user=await User.findById(request.params.id);
+            User.uploadedAvatar(request,response,function(err){//only multer can access enctype="multipart/form-data"-- request.body would not have accessed enctype="multipart/form-data" without multer
+                if(err){
+                    console.log('******Multer error:',err);
+                }
+                //console.log(request.file);
+                user.name=request.body.name;
+                user.email=request.body.email;
+
+                if(request.file){
+                    //if user uploads a file then store in user schema for user.avatar= 
+                    //saving the path of the uploaded file into the avatar field in the user
+                    user.avatar=User.avatarPath+'/'+request.file.filename;//user.avatar='uploads/users/avatar/avatar-1624623866554'
+                }
+                user.save();
+                return response.redirect('back');
+
+            });
+        }catch(err){
+            request.flash('error',err);
+            return response.redirect('back'); 
+        }
+    }else{
+        request.flash('error','You cannot update someone else profile');
+        return response.status(401).send('Unauthorized');
+    }   
+
 }
 
 
