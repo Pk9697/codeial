@@ -3,6 +3,7 @@ const Post=require('../models/post');
 module.exports.create=async function(request,response){
 
     try{
+        console.log(request.body);
         let post=await Post.findById(request.body.post);//we first find in the Post index from form data with name post
         
         if(post){//if post exists then only create comment

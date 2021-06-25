@@ -1,4 +1,4 @@
-{
+{  
     //method to submit form data for new post using ajax
     let createPost=function(){
         let newPostForm=$('#new-post-form');
@@ -9,7 +9,7 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),// converts from data into json in key value pair
                 success: function(data){
-                    //console.log(data);
+                    console.log(data);
                     let newPost=newPostDom(data.data.post);
                     $('#posts-div-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));//fetching deletelink inside newPost with class delete-button
@@ -77,7 +77,8 @@
                 type: 'get',
                 url: $(deleteLink).prop('href'),//.prop gets the value of href from delete a tag
                 success:function(data){
-                    $(`#post-${data.data.post_id}`).remove();
+                    console.log(data);
+                    $(`#post-${data.data.post_id}`).remove();//will remove the post from list of posts having id post_id from _post.ejs
 
                     new Noty({
                         theme: 'relax',

@@ -1,4 +1,4 @@
-/*{
+/*{ 
     let createComment=function(){
         let newCommentForm=$('#new-comments-form');
         newCommentForm.submit(function(e){
@@ -44,7 +44,7 @@ class PostComments{
                 url: '/comments/create',
                 data: $(self).serialize(),
                 success: function(data){
-                    //console.log(data);
+                    console.log(data);
                     let newComment=pSelf.newCommentDom(data.data.comment);
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
