@@ -10,7 +10,8 @@ const db = require('./config/mongoose');
 const session = require('express-session');//ctrl+space for autocomplete options
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-//const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
+const mongoose=require('mongoose');
+const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
 //const { MongoDBStore } = require('connect-mongodb-session');
 const sassMiddleware= require('node-sass-middleware');
 const flash=require('connect-flash');
@@ -55,30 +56,25 @@ app.use(session({
     cookie:{
         maxAge: (1000*60*100)  //max time cookie will be present
     },
-    /*store: new MongoStore(
+    // old update
+    // store: new MongoStore(
+    //     {
+    //         mongooseConnection: db,
+    //         autoRemove: 'disabled'     
+    //     },
+    //     function(err){
+    //         console.log(err ||  'connect-mongodb setup ok');
+    //     }
+    // )
+    //new update
+    store: MongoStore.create(
         {
-            mongooseConnection: db,
-            autoRemove: 'disabled'
+            mongoUrl: 'mongodb://localhost/codeial_db',
+            autoRemove: 'disabled' // Default is native    
+        }
         
-        },
-        function(err){
-            console.log(err ||  'connect-mongodb setup ok');
-        }
-    )*/
-    /*store: MongoStore.create(
-        {
-            mongoUrl: ,
-            autoRemove: 'disabled'
-            
-        },
-        function(err){
-            console.log(err || 'connect-mongodb setup ok');
-        }
-    )*/
-    /*store: MongoStore.create({
-        mongoUrl: MONGO_URL,
-        dbName: db
-    })*/
+    )
+    
 
 }));
 
