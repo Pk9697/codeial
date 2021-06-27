@@ -12,5 +12,6 @@ router.get('/',homeController.home);
 router.use('/users',require('./users'));//will use users.js when request comes for users
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));
+router.use('/api',require('./api'))
 
 module.exports=router;
