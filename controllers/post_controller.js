@@ -1,5 +1,5 @@
 const Post=require('../models/post');
-const Comment=require('../models/comment')
+const Comment=require('../models/comment');
 module.exports.create=async function(request,response){
     try{
         let post=await Post.create({
