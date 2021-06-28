@@ -5,7 +5,7 @@ const ExtractJWT=require('passport-jwt').ExtractJwt;
 const User=require('../models/user');//used to find user from db whenever request comes in and header contains jwt
 
 let options={
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken,
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: 'codeial'
 }
 
