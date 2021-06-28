@@ -9,7 +9,7 @@ let options={
     secretOrKey: 'codeial'
 }
 
-passport.use(new JWTStrategy(opts,function(jwtPayload,done){//jwtPayload contains info of the user
+passport.use(new JWTStrategy(options,function(jwtPayload,done){//jwtPayload contains info of the user
     
     User.findById(jwtPayload._id, function(err,user){//finding user from db using jwtPayload id which we will get whenever request comes in and header contains jwt
         if(err){
