@@ -11,6 +11,7 @@ const session = require('express-session');//ctrl+space for autocomplete options
 const passport= require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 const passportJWT=require('./config/passport-jwt-strategy');
+const passportGoogle=require('./config/passport-google-oauth2-strategy');
 const mongoose=require('mongoose');
 const MongoStore = require('connect-mongo');//setting up persistent storage so that whenever server restarts it doesn't remove cookie
 //const { MongoDBStore } = require('connect-mongodb-session');
