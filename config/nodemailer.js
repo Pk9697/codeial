@@ -4,13 +4,14 @@ const path=require('path');
 //transporter is an object which will be attached to nodemailer
 //part which sends email
 // part which defines how the communication is going to take place
+//let testAccount = await nodemailer.createTestAccount();
 let transporter=nodemailer.createTransport({
     service: 'gmail',
-    host: 'smtp.gmail.com',
+    host: 'smtp.gmail.com',//when we need to send mails they created this domain for us to interact with as developers
     port: 587,
     secure: false,
     auth: {//my own gmail for authentication as to who is requesting for mailer service which google can know otherwise anyone will be able to send email to any other person which a server can not handle or its spamming which google can track also google can charge if request is too many so you need a subscription plan for it
-        user: 'kmar.prashant152@gmail.com',
+        user: 'kumar.prashant152',
         pass: 'riveramazon'
     }
 });
