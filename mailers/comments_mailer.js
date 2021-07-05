@@ -20,4 +20,4 @@ exports.newComment=(comment)=>{//whenever a new comment is made we need to call 
         console.log('Message sent', info);
         return;
     });
-}
+} 
