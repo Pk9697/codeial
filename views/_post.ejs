@@ -10,8 +10,12 @@
         <small><!--Showing the author.-->
             <%= post.user.name %>
         </small>
-    </p>
 
+    </p>
+    <!--<button type="button" class="btn btn-primary active" style="background-color: aquamarine;" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>-->
+    <p class="count-tag">10</p>
+    <button type="button" class="like-btn btn btn-primary" style="background-color: aqua;">Like</button>
+    
     <div class="post-comments">
         <% if (locals.user) { %>
             <form id="post-<%= post._id %>-comments-form" action="/comments/create" method="POST">

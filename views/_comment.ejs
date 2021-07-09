@@ -1,4 +1,4 @@
-<li id="comment-<%= comment._id %>"> 
+<li id="comment-<%= comment._id %>">  
     <p>
         <% if(locals.user && locals.user.id==comment.user.id) { %>
             <small >
@@ -11,4 +11,6 @@
             <%= comment.user.name %>
         </small>
     </p>
+    <!--<p class="count-tag-comment">10</p>-->
+    <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button>
 </li>

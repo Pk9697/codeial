@@ -1,4 +1,4 @@
-/*{ 
+/*{  
     let createComment=function(){
         let newCommentForm=$('#new-comments-form');
         newCommentForm.submit(function(e){
@@ -24,10 +24,35 @@ class PostComments{
         this.createComment(postId);
         
         let self=this;
+        let like;
+        let count;
         // call for all the existing comments
         $(' .delete-comment-button', this.postContainer).each(function(){
             self.deleteComment($(this));
         });
+        // $(' .like-btn-comment', this.postContainer),$(' .count-tag-comment', this.postContainer).each(function(){
+        //     self.likeComment($(this),$(this));
+        // });
+    
+        // $(' .like-btn-comment, .count-tag-comment', this.postContainer).each(function(){
+        //     self.likeComment($(this),$(this));
+        // });
+        $(' .like-btn-comment', this.postContainer).each(function(){
+            
+            self.likeComment($(this));
+        });
+        // $(' .count-tag-comment', this.postContainer).each(function(){
+        //     count=$(this);
+                
+        // });
+        // self.likeComment(like,count);
+        // $(' .count-tag-comment', this.postContainer).each(function(){
+        //     count=$(this);
+        // });
+        // self.likeComment(like,count);
+        // 
+
+
 
     }
 
@@ -48,7 +73,8 @@ class PostComments{
                     let newComment=pSelf.newCommentDom(data.data.comment);
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
-
+                    //pSelf.likeComment($(' .like-btn-comment', newComment),$(' .count-tag-comment', newComment));
+                    pSelf.likeComment($(' .like-btn-comment', newComment));
                     new Noty({
                         theme: 'relax',
                         text: "Comment published!",
@@ -79,10 +105,32 @@ class PostComments{
             <small>
                 ${comment.user.name}
             </small>
-        </p>    
+        </p>
+        <p class="count-tag-comment">10</p>
+        <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button>    
 
         </li>`);
     }
+    
+    likeComment(likeBtn,flag=0){
+        $(likeBtn).click(function(e){
+            // let countTag=$('.count-tag');
+            
+            likeBtn.text(function(i,origText){
+            //let value=parseInt(origText);
+            if(flag==0){
+                flag=1;
+                return parseInt(origText)+1;
+            }else{
+                flag=0;
+                return parseInt(origText)-1;
+            }
+               
+            });
+            });
+    }
+
+
 
     deleteComment(deleteLink){
         $(deleteLink).click(function(e){

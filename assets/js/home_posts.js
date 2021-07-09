@@ -13,7 +13,7 @@
                     let newPost=newPostDom(data.data.post);
                     $('#posts-div-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));//fetching deletelink inside newPost with class delete-button
-                
+                    like($(' .like-btn', newPost),$(' .count-tag', newPost));
                     // call the create comment class
                     new PostComments(data.data.post._id);
 
@@ -48,6 +48,8 @@
                             ${ post.user.name }
                         </small>
                     </p>
+                    <p class="count-tag">10</p>
+                    <button type="button" class="like-btn btn btn-primary" style="background-color: red;">Like</button>
     
                     <div class="post-comments">
                     
@@ -93,6 +95,26 @@
                 }
             });
         });
+
+        
+    }
+    let flag=0;
+    let like=function(likeBtn,countTag){
+            $(likeBtn).click(function(e){
+            // let countTag=$('.count-tag');
+            
+            countTag.text(function(i,origText){
+            //let value=parseInt(origText);
+            if(flag==0){
+                flag=1;
+                return parseInt(origText)+1;
+            }else{
+                flag=0;
+                return parseInt(origText)-1;
+            }
+               
+            });
+            });
     }
     
 
@@ -102,6 +124,9 @@
             let self = $(this);
             let deleteButton = $(' .delete-post-button', self);
             deletePost(deleteButton);
+            let likeBtn=$(' .like-btn',self);
+            let countTag=$(' .count-tag',self);
+            like(likeBtn,countTag);
 
             // get the post's id by splitting the id attribute
             let postId = self.prop('id').split("-")[1];
@@ -111,5 +136,25 @@
 
     createPost();
     convertPostsToAjax();
+
+    // console.log("inside home posts js");
+    // let flag=0;
+    // $('#like-btn').click(function(){
+    //     let countTag=$('#count-tag');
+        
+    //     countTag.text(function(i,origText){
+    //         //let value=parseInt(origText);
+    //         if(flag==0){
+    //             flag=1;
+    //             return parseInt(origText)+1;
+    //         }else{
+    //             flag=0;
+    //             return parseInt(origText)-1;
+    //         }
+            
+            
+    //     });
+        
+    // });
     
 }
