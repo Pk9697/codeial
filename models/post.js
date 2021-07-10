@@ -16,7 +16,14 @@ const postSchema= new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref:'Comment'
         }
+    ],
+    likes:[//reference to like Model for faster query when looking for posts likes instead of searching post id in like db
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Like'
+        }
     ]
+
 },{
     timestamps:true
 });
