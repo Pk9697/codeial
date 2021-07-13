@@ -10,7 +10,21 @@
         <small>
             <%= comment.user.name %>
         </small>
+        <br>
+        <small>
+            <% if(locals.user) { %>
+                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                    <%= comment.likes.length %> Likes
+                </a>
+                
+            <% } else { %>
+                
+                <%= comment.likes.length %> Likes
+
+            <% } %>
+        </small>
+
     </p>
     <!--<p class="count-tag-comment">10</p>-->
-    <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button>
+    <!-- <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button> -->
 </li>

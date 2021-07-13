@@ -1,5 +1,7 @@
 const Post=require('../models/post');
 const Comment=require('../models/comment');
+const Like=require('../models/like');
+
 module.exports.create=async function(request,response){
     try{
         let post=await Post.create({
@@ -37,6 +39,12 @@ module.exports.destroy=async function(request,response){
         let post=await Post.findById(request.params.id);
 
         if(post.user == request.user.id){//authorization if the delete request is from the same person who created it or not
+
+
+            //CHANGE:: delete the associated likes for the post and all its comment's likes too
+            await Like.deleteMany({likeable: post,onModel: 'Post'});
+            await Like.deleteMany({_id: {$in: post.comments}});
+
             post.remove();
         //deleteMany is the fxn which deleted all the comments based on some query past
             await Comment.deleteMany({post: request.params.id});//delete comments with post having that post id

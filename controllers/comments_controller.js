@@ -3,6 +3,8 @@ const Post=require('../models/post');
 const commentsMailer=require('../mailers/comments_mailer');
 const queue=require('../config/kue');
 const commentEmailWorker=require('../workers/comment_email_worker');
+const Like=require('../models/like');
+
 module.exports.create=async function(request,response){
 
     try{
@@ -64,6 +66,9 @@ module.exports.destroy=async function(request,response){
         comment.remove();
         //$pull is the mongodb syntax to remove from db
         let post=await Post.findByIdAndUpdate(postId, {$pull: {comments: request.params.id}});
+
+        //CHANGE:: destroy the associated likes for this comment
+        await Like.deleteMany({likeable: comment._id,onModel: 'Comment'});//!see again that after deleting comment will this work?
         
          // send the comment id which was deleted back to the views
          if (request.xhr){

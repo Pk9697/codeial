@@ -13,9 +13,12 @@
                     let newPost=newPostDom(data.data.post);
                     $('#posts-div-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));//fetching deletelink inside newPost with class delete-button
-                    like($(' .like-btn', newPost),$(' .count-tag', newPost));
+                    // like($(' .like-btn', newPost),$(' .count-tag', newPost));
                     // call the create comment class
                     new PostComments(data.data.post._id);
+
+                    // CHANGE:: enable the functionality of the toggle like button on the new post
+                    new ToggleLike($(' .toggle-like-button', newPost));
 
                     new Noty({
                         theme: 'relax',
@@ -47,9 +50,19 @@
                         <small><!--Showing the author-->
                             ${ post.user.name }
                         </small>
+
+                        <br>
+
+                        <small>
+                            <!-- Whenever adding post dynamically its hould show 0 likes-- obviously-->
+                            <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                                0 Likes 
+                            </a>
+                        </small>
+
                     </p>
-                    <p class="count-tag">10</p>
-                    <button type="button" class="like-btn btn btn-primary" style="background-color: red;">Like</button>
+                    <!--<p class="count-tag">10</p>
+                    <button type="button" class="like-btn btn btn-primary" style="background-color: red;">Like</button>-->
     
                     <div class="post-comments">
                     
@@ -98,24 +111,24 @@
 
         
     }
-    let flag=0;
-    let like=function(likeBtn,countTag){
-            $(likeBtn).click(function(e){
-            // let countTag=$('.count-tag');
+    // let flag=0;
+    // let like=function(likeBtn,countTag){
+    //         $(likeBtn).click(function(e){
+    //         // let countTag=$('.count-tag');
             
-            countTag.text(function(i,origText){
-            //let value=parseInt(origText);
-            if(flag==0){
-                flag=1;
-                return parseInt(origText)+1;
-            }else{
-                flag=0;
-                return parseInt(origText)-1;
-            }
+    //         countTag.text(function(i,origText){
+    //         //let value=parseInt(origText);
+    //         if(flag==0){
+    //             flag=1;
+    //             return parseInt(origText)+1;
+    //         }else{
+    //             flag=0;
+    //             return parseInt(origText)-1;
+    //         }
                
-            });
-            });
-    }
+    //         });
+    //         });
+    // }
     
 
      // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
@@ -124,9 +137,9 @@
             let self = $(this);
             let deleteButton = $(' .delete-post-button', self);
             deletePost(deleteButton);
-            let likeBtn=$(' .like-btn',self);
-            let countTag=$(' .count-tag',self);
-            like(likeBtn,countTag);
+            // let likeBtn=$(' .like-btn',self);
+            // let countTag=$(' .count-tag',self);
+            // like(likeBtn,countTag);
 
             // get the post's id by splitting the id attribute
             let postId = self.prop('id').split("-")[1];

@@ -8,15 +8,20 @@ module.exports.home= async function(request,response){
 
     //writing cleaner code using async await
     try{
+        //CHANGE:: populate the likes of each post and comment
         let posts=await Post.find({})//1st this completes
         .sort('-createdAt')//to display posts which are created recent at first
         .populate('user')//from postSchema
-        .populate({
+        .populate({//populating for comments
             path: 'comments',
             populate:{
                 path: 'user'//users who commented
+            },
+            populate: {
+                path: 'likes'//all the likes of comment
             }
-        });
+
+        }).populate('likes');//populating for posts-all the likes of posts
     
         let users=await User.find({});//2nd this
 

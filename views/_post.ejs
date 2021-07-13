@@ -10,11 +10,28 @@
         <small><!--Showing the author.-->
             <%= post.user.name %>
         </small>
+        
+        <!-- CHANGE:: display the likes of this post,if the user is logged inmthen show the link to toggle likes,else just show the count-->
+        
+        <br>
+        <!-- study about the data attribute -->
 
+        <small>
+            <% if(locals.user) { %>
+                <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                    <%= post.likes.length %> Likes
+                </a>
+                
+            <% } else { %>
+                
+                <%= post.likes.length %> Likes
+
+            <%} %>
+        </small>
     </p>
     <!--<button type="button" class="btn btn-primary active" style="background-color: aquamarine;" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>-->
-    <p class="count-tag">10</p>
-    <button type="button" class="like-btn btn btn-primary" style="background-color: aqua;">Like</button>
+    <!-- <p class="count-tag">10</p>
+    <button type="button" class="like-btn btn btn-primary" style="background-color: aqua;">Like</button> -->
     
     <div class="post-comments">
         <% if (locals.user) { %>

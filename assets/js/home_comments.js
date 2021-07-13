@@ -24,8 +24,8 @@ class PostComments{
         this.createComment(postId);
         
         let self=this;
-        let like;
-        let count;
+        // let like;
+        // let count;
         // call for all the existing comments
         $(' .delete-comment-button', this.postContainer).each(function(){
             self.deleteComment($(this));
@@ -37,10 +37,10 @@ class PostComments{
         // $(' .like-btn-comment, .count-tag-comment', this.postContainer).each(function(){
         //     self.likeComment($(this),$(this));
         // });
-        $(' .like-btn-comment', this.postContainer).each(function(){
+        // $(' .like-btn-comment', this.postContainer).each(function(){
             
-            self.likeComment($(this));
-        });
+        //     self.likeComment($(this));
+        // });
         // $(' .count-tag-comment', this.postContainer).each(function(){
         //     count=$(this);
                 
@@ -74,7 +74,11 @@ class PostComments{
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
                     //pSelf.likeComment($(' .like-btn-comment', newComment),$(' .count-tag-comment', newComment));
-                    pSelf.likeComment($(' .like-btn-comment', newComment));
+                    // pSelf.likeComment($(' .like-btn-comment', newComment));
+
+                    // CHANGE:: enable the functionality of the toggle like button on the new comment
+                    new ToggleLike($(' .toggle-like-button', newComment));
+
                     new Noty({
                         theme: 'relax',
                         text: "Comment published!",
@@ -105,30 +109,37 @@ class PostComments{
             <small>
                 ${comment.user.name}
             </small>
+            <br>
+            <small>
+                <!-- Whenever adding post dynamically its hould show 0 likes-- obviously-->
+                <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${comment._id}&type=Comment">
+                    0 Likes 
+                </a>
+            </small>
         </p>
-        <p class="count-tag-comment">10</p>
-        <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button>    
+        <!--<p class="count-tag-comment">10</p>
+        <button type="button" class="like-btn-comment btn btn-primary" style="background-color: aqua;">100</button>-->    
 
         </li>`);
     }
     
-    likeComment(likeBtn,flag=0){
-        $(likeBtn).click(function(e){
-            // let countTag=$('.count-tag');
+    // likeComment(likeBtn,flag=0){
+    //     $(likeBtn).click(function(e){
+    //         // let countTag=$('.count-tag');
             
-            likeBtn.text(function(i,origText){
-            //let value=parseInt(origText);
-            if(flag==0){
-                flag=1;
-                return parseInt(origText)+1;
-            }else{
-                flag=0;
-                return parseInt(origText)-1;
-            }
+    //         likeBtn.text(function(i,origText){
+    //         //let value=parseInt(origText);
+    //         if(flag==0){
+    //             flag=1;
+    //             return parseInt(origText)+1;
+    //         }else{
+    //             flag=0;
+    //             return parseInt(origText)-1;
+    //         }
                
-            });
-            });
-    }
+    //         });
+    //         });
+    // }
 
 
 
