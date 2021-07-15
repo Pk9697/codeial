@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="/css/user_profile.css">
+<link rel="stylesheet" href="/css/user_profile.css"> 
+
 <h1>
     Codeial/Profile page
 </h1>
@@ -18,4 +19,34 @@
     <!--else show only the profile info-->
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
+    <% flag=0%>
+    <!-- if(loggedinuser.friendships.length>=1 -->
+    <!-- if(friendships exists for loggedin user then only load this) -->
+    <% if(loggedinuser.friendships) {%> 
+        <% for(friends of loggedinuser.friendships) { %>
+        <!-- <p><%=friends.to_user._id%></p> -->
+        
+            <% if(friends.to_user.id==profile_user.id) { %>
+            <p class="friendptag">Is a friend</p>
+            <% flag=1%>
+            <a id="friendsBtn" href="/friends/toggle/?from=<%=user._id%>&to=<%=profile_user._id%>">Remove friend</a>
+            <% }  %>
+        
+        
+        <!-- <% if(friends.to_user.id==profile_user.id) { %>
+            <p class="friendptag">Is a friend</p>
+            <% flag=1%>
+            <a id="friendsBtn" href="/friends/toggle/?from=<%=user._id%>&to=<%=profile_user._id%>">Remove friend</a>
+        <% }  %> -->
+        <% }  %>
+    <%}%> 
+    <% if(flag==0) {%>
+        <p class="friendptag">Is not a friend</p>
+        <a id="friendsBtn" href="/friends/toggle/?from=<%=user._id%>&to=<%=profile_user._id%>">ADD friend</a>
+    <% } %>
+    <!-- <a id="friendsBtn" href="/friends/toggle/?from=<%=user._id%>&to=<%=profile_user._id%>">ADD friend</a> -->
+    <!-- /?from=<%=user._id%>&to=<%=profile_user._id%> -->
 <% }  %>
+
+
+<script src="/js/toggle_friends.js"></script>

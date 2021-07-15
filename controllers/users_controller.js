@@ -1,17 +1,45 @@
 const db=require('../config/mongoose');
 const User=require('../models/user');
 const Post=require('../models/post');
+const Friendship=require('../models/friendship');
 const fs=require('fs');
 const path=require('path');
 //no change keep it same as before cos there is no nesting here only callback fxns
-module.exports.profile=function(request,response){
+module.exports.profile=async function(request,response){
     //return response.end('<h1>User Profile</h1>');
-    User.findById(request.params.id,function(err,user){
-        return response.render('user_profile',{
-            title:"User Profile",
-            profile_user: user
-        });
+    // let friendship=await Friendship.findById({
+    //     from_user: request.user._id,
+    //     // to_user: request.params.id
+    // });
+    //let friendship=await Friendship.findById(request.user._id,request.params.id);
+    try{
+        console.log(request.user._id);
+        console.log(request.params.id);
+    let loggedinuser=await User.findById(request.user._id)
+    .populate({
+        path: 'friendships',
+        populate:{
+            path: 'to_user'
+        }
     });
+
+    console.log(loggedinuser.friendships.length);
+    let user=await User.findById(request.params.id);
+    //console.log(user);
+    return response.render('user_profile',{
+        title:"User Profile",
+        profile_user: user,
+        loggedinuser:loggedinuser
+
+    });
+
+    }catch(err){ 
+        console.log('Error',err);
+        return;
+    }
+    
+
+
     /*return response.render('user_profile',{
         title:"User Profile"
         

@@ -18,7 +18,13 @@ const userSchema= new mongoose.Schema({
     },
     avatar: {//we need to save the reference or path where avatars will be stored inside users schema 
         type: String
-    }
+    },
+    friendships: [//for superfast access when trying to find friends of a logged in user
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'Friendship'
+        }
+    ]
 
 
 },{

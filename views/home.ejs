@@ -31,7 +31,7 @@
                     </ul>
     
                 </div>
-                
+                 
             </section>
     
             <section id="user-friends">
@@ -43,6 +43,24 @@
                     </p>
                 <% } %>
             </section>
+            <% if (locals.user){ %>
+            <section id="my-friends">
+                <h4>My Friends</h4>
+                <!-- console.log(users[0].friendships[0].from_user); -->
+                <% for(u of all_users) { %>
+                    <% if (locals.user.id==u.id){ %>
+                        
+                        <% for(p of u.friendships) { %>
+                            <p> <%= p.to_user.name %> </p>
+                        <% } %>
+
+                    <% } %>
+                <% } %>
+
+            </section>
+            <% } %>
+
+
         </div>
         <script src="/js/home_comments.js"></script><!--very very important to load comments js first-->
         <script src="/js/home_posts.js"></script>
@@ -56,5 +74,8 @@
                 let toggleLike=new ToggleLike(self);
             })
         </script>
+        
+
+
     </body>
 </html>

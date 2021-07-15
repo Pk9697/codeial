@@ -1,5 +1,5 @@
 const Post=require('../models/post');
-const Comment=require('../models/comment');
+const Comment=require('../models/comment'); 
 const Like=require('../models/like');
 
 module.exports.create=async function(request,response){
