@@ -3,62 +3,91 @@
         <title>
         <%= title %>
         </title>
-        <link rel="stylesheet" href="/css/home.css">
+        <!-- <link rel="stylesheet" href="/css/home.css"> -->
+        <link rel="stylesheet" href="/css/chat_box.css">
     </head>
     <body>
-        <div id="home-container">
-        <!--<h1>Codeial html page rendered / <%= title %></h1>-->
-
-            <section id="feed-posts">
+        <div class="container-fluid" id="home-container">
+            <!--<h1>Codeial html page rendered / <%= title %></h1>-->
+            <div class="row border" style="width: 100%;">
+                <section class="col-9 border bg-light" style="height: 100%; overflow: auto;" id="feed-posts">
     
-                <h4>Posts</h4>
-                <!--1st level of check to display form only when user is signed in-->
-                <% if (locals.user){ %>
-                <form action="/posts/create" id="new-post-form" method="POST">
-                    <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea> 
-                    <input type="submit" value="Post">
-                </form>
-    
-                <% } %>
-    
-                <div id="posts-div-container">
-                    <ul>
-                        <% for(post of posts) { %>
-    
-                            <%- include('_post') -%>      <!--Making our codebase smaller using partials we include _post.ejs where rest of post code is situated-->
-                            
-                        <% } %>
-                    </ul>
-    
-                </div>
-                 
-            </section>
-    
-            <section id="user-friends">
-                <h4>Friends</h4>
-                <% for(u of all_users) { %>
-                    
-                    <p>
-                        <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-                    </p>
-                <% } %>
-            </section>
-            <% if (locals.user){ %>
-            <section id="my-friends">
-                <h4>My Friends</h4>
-                <!-- console.log(users[0].friendships[0].from_user); -->
-                <% for(u of all_users) { %>
-                    <% if (locals.user.id==u.id){ %>
-                        
-                        <% for(p of u.friendships) { %>
-                            <p> <%= p.to_user.name %> </p>
-                        <% } %>
-
+                    <h4>Posts</h4>
+                    <!--1st level of check to display form only when user is signed in-->
+                    <% if (locals.user){ %>
+                    <form action="/posts/create" id="new-post-form" method="POST">
+                        <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea> 
+                        <input type="submit" value="Post">
+                    </form>
+        
                     <% } %>
-                <% } %>
+        
+                    <div id="posts-div-container">
+                        <ul>
+                            <% for(post of posts) { %>
+        
+                                <%- include('_post') -%>      <!--Making our codebase smaller using partials we include _post.ejs where rest of post code is situated-->
+                                
+                            <% } %>
+                        </ul>
+        
+                    </div>
+                     
+                </section>
+                <div class="col-3">
+                    <section class="row border" style="width:auto; height: 50%;" id="user-friends">
+                        <div class="col-12" style="height: 10%;">
+                            <h4>Friends</h4>
+                        </div>
+                        
+                        <div class="d-flex flex-column mb-1 bg-light " style="overflow: auto; height: 90%; width: 100%;">
+                            <% for(u of all_users) { %>
+                                <div class="p-1">
+                                    <p>
+                                        <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                                    </p>
+                                </div>
+                                
+    
+                            <% } %>
+                        </div>
+                        
+                    </section>
+                    <% if (locals.user){ %>
+                    <section class="row border" style="width:auto; height: 50%;" id="my-friends">
+                        <div class="col-12" style="height: 10%;">
+                            <h4>My Friends</h4>
+                        </div>
+                        <!-- console.log(users[0].friendships[0].from_user); -->
+                        <div class="d-flex flex-column mb-1 mx-2 bg-light " style="overflow: auto; height: 90% ; width: 100%;">
+                            <% for(u of all_users) { %>
+                                <% if (locals.user.id==u.id){ %>
+                                    
+                                    <% for(p of u.friendships) { %>
+                                        <div class="p-1">
+                                            <p>
+                                                <a href="/users/profile/<%= p.to_user._id %>"> <%= p.to_user.name %> </a>
+                                                  
+                                            </p>
+                                        </div>
+                                        
+                                    <% } %>
+            
+                                <% } %>
+                            <% } %>
+                        </div>
+                        
+        
+                    </section>
+                    <% } %>
+                </div>
 
-            </section>
-            <% } %>
+                
+            </div>
+            <%- include('_chat_box') -%>
+            
+
+            
 
 
         </div>

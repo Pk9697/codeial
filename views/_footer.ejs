@@ -1,14 +1,20 @@
 <footer>
-
+    
     <h3>@ Codeial. All Rights Reserved</h3>
 
     <div>
         <a href="/">
             Home
         </a>
-        <a href="/users/profile">
+        <% if (locals.user){ %>
+        <a href="/users/profile/<%= locals.user._id %>">
             Profile
         </a>
+        <% }else{ %>
+            <div class="mr-2">
+                <a href="/users/sign-in" style="color: white;">Sign In</a>
+            </div>
+        <% } %>
     </div>
 
 

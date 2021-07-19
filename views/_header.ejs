@@ -1,28 +1,36 @@
-<header>
-    <h1>codeial</h1>
-
-    <ul>
-        <% if (locals.user){ %>
-            <li>
-                <a href="/users/profile/<%= locals.user._id %>">
-                    <%= user.name %>
-                </a>
-            </li>
-            <li>
-                <a href="/users/sign-out">Sign Out</a>
-            </li>
-        <% }else{ %>
-
-            <li>
-                <a href="/users/sign-in">Sign In</a>
-            </li>
-
-            <li>
-                <a href="/users/sign-up">Sign Up</a>
-            </li>
-
-
-        <% } %>
-    </ul>
+<header class="container-fluid" style="background-color: cadetblue;">
+    <div class="row">
+        <div class="col-9" style="color: white;">
+            <h1>codeial</h1>
+        </div>
+        
+        <div class="col-3 d-flex justify-content-end">
+            
+                <% if (locals.user){ %>
+                    <div class="mr-2" >
+                        <a href="/users/profile/<%= locals.user._id %>" style="color: white;font-size: larger;">
+                            <%= user.name %>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/users/sign-out" style="color: white; font-size: larger;">Sign Out</a>
+                    </div>
+                <% }else{ %>
+        
+                    <div class="mr-2">
+                        <a href="/users/sign-in" style="color: white;">Sign In</a>
+                    </div>
+        
+                    <div>
+                        <a href="/users/sign-up" style="color: white;">Sign Up</a>
+                    </div>
+        
+        
+                <% } %>
+            
+        </div>
+    </div>
+    
+    
 
 </header>

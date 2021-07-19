@@ -1,13 +1,15 @@
-<link rel="stylesheet" href="/css/user_profile.css"> 
+<link rel="stylesheet" href="/css/user_profile.css">  
 
 <h1>
     Codeial/Profile page
 </h1>
-<img src="<%= user.avatar %>" alt="<%= user.name %>" width="100">
+<!-- <img src="<%= user.avatar %>" alt="<%= user.name %>" width="100"> -->
 
 
 <% if(user.id==profile_user.id) { %>
     <!--if user matches show the form-->
+    <img src="<%= user.avatar %>" alt="<%= user.name %>" width="100">
+
     <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data" method="POST"><!--data can be text or file-->
         <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
         <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
@@ -17,6 +19,7 @@
     
 <% } else {%>
     <!--else show only the profile info-->
+    <img src="<%= profile_user.avatar %>" alt="<%= profile_user.name %>" width="100">
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
     <% flag=0%>

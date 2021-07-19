@@ -1,0 +1,23 @@
+<!-- CHANGE:: Code for chat box -->
+<% if(locals.user){%>
+    
+    <div id="user-chat-box" >
+
+        <ul class="bg-light" id="chat-messages-list">
+            <li class="other-message">
+                <span>Other message</span>
+            </li>
+            <li class="self-message">
+                <span>Self message</span>
+            </li>
+        </ul>
+
+        <div class="" id="chat-message-input-container">
+            <!-- <input id="chat-message-input" placeholder="Type message here"> -->
+            <input type="text" id="chat-message-input" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Type message here">
+            <button id="send-button" class="btn btn-outline-success">Send</button>
+        </div>
+
+    </div>    
+    
+<%} %>
