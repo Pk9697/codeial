@@ -23,7 +23,7 @@ module.exports.profile=async function(request,response){
         }
     });
 
-    console.log(loggedinuser.friendships.length);
+    // console.log(loggedinuser.friendships.length);
     let user=await User.findById(request.params.id);
     //console.log(user);
     return response.render('user_profile',{

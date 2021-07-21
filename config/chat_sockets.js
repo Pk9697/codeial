@@ -31,5 +31,9 @@ module.exports.chatSockets = function(socketServer){
             //when i join the chatroom everyone including me should receive notification that i joined the chatroom
             io.in(data.chatroom).emit('user_joined',data);//emitting 'user_joined' event from server to every other subscriber
         });
+        //CHANGE:: detect send_message and broadcast to everyone in the room
+        socket.on('send_message',function(data){
+            io.in(data.chatroom).emit('receive_message',data);
+        })
     }); 
 }

@@ -1,22 +1,41 @@
-<!-- CHANGE:: Code for chat box -->
+<!-- CHANGE:: Code for chat box --> 
 <% if(locals.user){%>
     
     <div id="user-chat-box" >
 
         <ul class="bg-light" id="chat-messages-list">
-            <li class="other-message">
+            <!-- <li class="other-message">
                 <span>Other message</span>
             </li>
             <li class="self-message">
                 <span>Self message</span>
-            </li>
+            </li> -->
+            <% for(chat of all_chats) {%>
+                
+                <% if(locals.user.id==chat.user.id) {%>
+                    <li class="self-message">
+                        <span><%=chat.content%></span>
+                        <sub><%=chat.user.email%></sub>
+                        <!-- <span><%=chat.user%></span>
+                        <span><%=locals.user._id %></span> -->
+                    </li>
+                <% } else { %>
+                    <li class="other-message">
+                        <span><%=chat.content%></span>
+                        <sub><%=chat.user.email%></sub>
+                    </li>
+
+                <%} %>
+                
+
+            <%} %>
         </ul>
 
-        <div class="" id="chat-message-input-container">
+        <form action="/chats/create" id="chat-message-input-container" method="POST">
             <!-- <input id="chat-message-input" placeholder="Type message here"> -->
-            <input type="text" id="chat-message-input" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Type message here">
-            <button id="send-button" class="btn btn-outline-success">Send</button>
-        </div>
+            <input type="text" name="content" id="chat-message-input" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Type message here">
+            <button id="send-button" type="submit" class="btn btn-outline-success">Send</button>
+        </form>
 
     </div>    
     

@@ -4,6 +4,7 @@ const { localsName } = require('ejs');
 const Post=require('../models/post');
 const User=require('../models/user');
 const passport=require('passport');
+const Chat=require('../models/chat');
 module.exports.home= async function(request,response){
     
     //Populate the user of each post(whole user object is populated for that userid)
@@ -54,11 +55,17 @@ module.exports.home= async function(request,response){
 
         //console.log(loggedinuserp[0].friendships[0].to_user.name);
         //console.log(loggedinuserp);
+
+        let chats=await Chat.find({})
+        .populate('user');
+
+        // console.log(chats);
         return response.render('home',{//then at last this
             title:"Home",
             posts:posts, //passing every posts from db to home.ejs
             all_users:users, //sending all the users from user db
             //loggedinuserp:loggedinuserp
+            all_chats:chats
         });
     }catch(err){ 
         console.log('Error',err);

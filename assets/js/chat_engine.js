@@ -27,5 +27,66 @@ class ChatEngine{
                 console.log("a user joined:", data);
             })
         })
+
+        //CHANGE:: send a message on clicking the send message button
+        // $('#send-button').click(function(){
+        //     let msg=$('#chat-message-input').val();
+        //     if(msg!=''){
+        //         self.socket.emit('send_message', {
+        //             message:msg,
+        //             user_email:self.userEmail,
+        //             chatroom:'codeial'
+        //         });
+        //     }
+        // });
+
+        let newChatform=$('#chat-message-input-container');
+        newChatform.submit(function(e){
+            e.preventDefault();
+            let msg=$('#chat-message-input').val();
+            if(msg!=''){
+                $.ajax({
+                    type:'post',
+                    url: '/chats/create',
+                    data: newChatform.serialize(),
+                    success: function(data){
+                        // console.log(data.data.chat.user.email);
+                        // console.log(data.data.chat.content);
+                        self.socket.emit('send_message', {
+                            message:data.data.chat.content,
+                            user_email:self.userEmail,
+                            chatroom:'codeial'
+                        });
+                        $('#chat-message-input').val('');//clears input area 
+    
+                    }, error: function(error){
+                        console.log(error.responseText);
+                    }
+                })
+            }
+            
+        })
+
+        self.socket.on('receive_message',function(data){
+            console.log('message received', data.message);
+
+            let newMessage=$('<li>');//will create the list item
+            //detect what is the msg type
+            let messageType='other-message';
+            if(data.user_email == self.userEmail){
+                messageType='self-message';
+            }
+            newMessage.append($('<span>',{//what message is sent
+                'html': data.message// append span with its html content as data.message
+            }));
+            newMessage.append($('<sub>',{//who sent the message
+                'html': data.user_email// append subscript with its html content as data.user_email
+            }));
+
+            newMessage.addClass(messageType);//whether its self or other message
+
+            //finally append it to ul
+            $('#chat-messages-list').append(newMessage);
+        });
     }
 }
