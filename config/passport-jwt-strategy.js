@@ -3,10 +3,11 @@ const JWTStrategy=require('passport-jwt').Strategy;
 const ExtractJWT=require('passport-jwt').ExtractJwt;
 
 const User=require('../models/user');//used to find user from db whenever request comes in and header contains jwt
+const env=require('./environment');
 
 let options={
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'codeial'
+    secretOrKey: env.jwt_secret
 }
 
 passport.use(new JWTStrategy(options,function(jwtPayload,done){//jwtPayload contains info of the user
