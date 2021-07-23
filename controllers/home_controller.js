@@ -60,6 +60,7 @@ module.exports.home= async function(request,response){
         .populate('user');
 
         // console.log(chats);
+        //console.log('process:',process.env);
         return response.render('home',{//then at last this
             title:"Home",
             posts:posts, //passing every posts from db to home.ejs
