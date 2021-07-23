@@ -1,0 +1,2 @@
+::1 - - [23/Jul/2021:15:46:30 +0000] "GET / HTTP/1.1" 200 16155 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36"
+::1 - - [23/Jul/2021:15:48:15 +0000] "GET /users/profile/60fa7f3c45f5734678d4555f HTTP/1.1" 304 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36"

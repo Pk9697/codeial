@@ -1,5 +1,6 @@
 const express=require('express');
 const env=require('./config/environment');
+const logger=require('morgan');
 const cookieParser=require('cookie-parser');
 const app=express();
 const port=5000;
@@ -26,14 +27,17 @@ const chatSockets=require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(4000);
 console.log('chat server is listening on port 4000');
 const path=require('path');
+// console.log('assetpath:',process.env.ASSET_PATH);
+if(env.name=='development'){//*only in development phase we need sass middleware to load again and again cos we make changes on the go but not in production mode
+    app.use(sassMiddleware({
+        src: path.join(__dirname,env.asset_path,'scss'),  //from where do i pick up scss files to convert into css
+        dest: path.join(__dirname,env.asset_path,'css'),       //where do i need to put the css files
+        debug:  true,                    //debug mode is whatever info you see in the terminal while server is running //true cos we want to see if any error occurs to be displayed in terminal //false when we run it in production mode
+        outputStyle: 'extended',                      // do i want everything in single line(compressed) or in multiple lines(extended)
+        prefix: '/css'                            //where should my server look out for css files //just the prefix of css files in href /css/layout.css 
+    }));
+}
 
-app.use(sassMiddleware({
-    src: path.join(__dirname,env.asset_path,'scss'),  //from where do i pick up scss files to convert into css
-    dest: path.join(__dirname,env.asset_path,'css'),       //where do i need to put the css files
-    debug:  true,                    //debug mode is whatever info you see in the terminal while server is running //true cos we want to see if any error occurs to be displayed in terminal //false when we run it in production mode
-    outputStyle: 'extended',                      // do i want everything in single line(compressed) or in multiple lines(extended)
-    prefix: '/css'                            //where should my server look out for css files //just the prefix of css files in href /css/layout.css 
-}));
 
 
 app.use(express.urlencoded());
@@ -45,6 +49,8 @@ app.use(cookieParser());
 app.use(express.static(env.asset_path));
 //make the uploads path availaible to the browser
 app.use('/uploads',express.static(__dirname+'/uploads'));
+
+app.use(logger(env.morgan.mode,env.morgan.options));
 
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout

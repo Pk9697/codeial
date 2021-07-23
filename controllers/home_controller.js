@@ -34,7 +34,7 @@ module.exports.home= async function(request,response){
                     path: 'to_user'
                 }
             });
-
+            // console.log('assetpath:',process.env.ASSET_PATH);
         //console.log(users[0]);
         
         
