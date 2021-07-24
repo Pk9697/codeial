@@ -42,7 +42,7 @@ if(env.name=='development'){//*only in development phase we need sass middleware
 
 
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: false}));
 
 app.use(cookieParser());
 //use express router before the server starts that is why we use middlewares here
