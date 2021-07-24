@@ -1,0 +1,15 @@
+#layout-footer footer {
+  display: flex;
+  background-color: grey; }
+  #layout-footer footer h3 {
+    color: white;
+    display: inline-block; }
+  #layout-footer footer div {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    #layout-footer footer div a {
+      font-size: large;
+      text-decoration: none;
+      color: white; }
